@@ -7,6 +7,8 @@
 #include "MyStatComponent.generated.h"
 
 
+DECLARE_MULTICAST_DELEGATE(FOnHpChanged);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREAL_STUDY_API UMyStatComponent : public UActorComponent
 {
@@ -23,10 +25,13 @@ protected:
 
 public:
 	void SetLevel(int32 Level);
+	void SetHp(int32 NewHp);
 	void OnAttacked(float DamageAmout);
 
 	int32 GetLevel() { return Level; }
 	int32 GetHp() { return Hp; }
+	int32 GetMaxHp() { return MaxHp; }
+	float GetHpRatio() { return Hp / float(MaxHp); }
 	int32 GetAttack() { return Attack; }
 
 private:
@@ -40,4 +45,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))
 	int32 Attack;
 
+	UPROPERTY(EditAnywhere, Category = Stat, Meta = (AllowPrivateAccess = true))
+	int32 MaxHp;
+
+public:
+	FOnHpChanged OnHpChanged;
 };

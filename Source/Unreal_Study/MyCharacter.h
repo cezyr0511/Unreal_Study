@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEnd);
+
 UCLASS()
 class UNREAL_STUDY_API AMyCharacter : public ACharacter
 {
@@ -34,6 +36,8 @@ public:
 
 	void Attack();
 	void AttackCheck();
+
+	FOnAttackEnd OnAttackEnd;
 
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
@@ -70,5 +74,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	class UMyStatComponent* Stat;
+
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HpBar;
 
 };
